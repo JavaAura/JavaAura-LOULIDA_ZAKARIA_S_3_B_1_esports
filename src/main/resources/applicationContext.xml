@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="org.esport"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- DataSource Configuration -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:esportdb;DB_CLOSE_DELAY=-1"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- EntityManagerFactory Configuration -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="org.esport.model"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Transaction Manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- DAOs -->
+    <bean id="PlayerDao" class="org.esport.dao.impl.PlayerDaoImpl"/>
+    <bean id="TeamDao" class="org.esport.dao.impl.TeamDaoImpl"/>
+    <bean id="TournamentDao" class="org.esport.dao.impl.TournamentDaoExtension">
+        <constructor-arg ref="TournamentDaoImpl"/>
+    </bean>
+    <bean id="GameDao" class="org.esport.dao.impl.GameDaoImpl"/>
+
+    <bean id="TournamentDaoImpl" class="org.esport.dao.impl.TournamentDaoImpl"/>
+
+    <bean id="TournamentDaoExtension" class="org.esport.dao.impl.TournamentDaoExtension">
+        <constructor-arg ref="TournamentDaoImpl"/>
+    </bean>
+
+    <!-- Services -->
+    <bean id="PlayerService" class="org.esport.service.impl.PlayerServiceImpl">
+        <constructor-arg ref="PlayerDao"/> <!-- Corrected from GameDao to PlayerDao -->
+    </bean>
+
+    <bean id="TeamService" class="org.esport.service.impl.TeamServiceImpl">
+        <constructor-arg ref="TeamDao"/>
+        <constructor-arg ref="PlayerDao"/>
+    </bean>
+    <bean id="TournamentService" class="org.esport.service.impl.TournamentServiceImpl">
+        <constructor-arg ref="TournamentDao"/>
+        <constructor-arg ref="TeamDao"/>
+    </bean>
+    <bean id="GameService" class="org.esport.service.impl.GameServiceImpl">
+        <constructor-arg ref="GameDao"/>
+    </bean>
+
+    <!-- Other beans remain the same -->
+
+    <bean id="mainMenu" class="org.esport.presentation.menu.MainMenu">
+        <constructor-arg ref="PlayerController"/>
+        <constructor-arg ref="TeamController"/>
+        <constructor-arg ref="TournamentController"/>
+        <constructor-arg ref="GameController"/>
+        <constructor-arg ref="consoleLogger"/>
+    </bean>
+
+    <bean id="PlayerController" class="org.esport.controller.PlayerController">
+        <constructor-arg ref="PlayerService"/>
+    </bean>
+
+    <bean id="TeamController" class="org.esport.controller.TeamController">
+        <constructor-arg ref="TeamService"/>
+    </bean>
+
+    <bean id="TournamentController" class="org.esport.controller.TournamentController">
+        <constructor-arg ref="TournamentService"/>
+    </bean>
+
+    <bean id="GameController" class="org.esport.controller.GameController">
+        <constructor-arg ref="GameService"/>
+    </bean>
+
+    <bean id="consoleLogger" class="org.esport.util.ConsoleLogger"/>
+
+    <!-- H2 Web Server -->
+    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
+        <constructor-arg value="-web,-webAllowOthers,-webPort,8082" />
+    </bean>
+
+</beans>

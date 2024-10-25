@@ -1,0 +1,47 @@
+[33mcommit 8c9a45ac4be85a072fbedc2c9962b335e90b6e0e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: zakaria loulida <zakarialoulida92@gmail.com>
+Date:   Fri Oct 25 07:57:45 2024 +0100
+
+    Reset repository
+
+[33mcommit 8a87be8b0dde2b6f3c01f273a24324f31f864ea4[m[33m ([m[1;31mall/main[m[33m)[m
+Author: zakaria loulida <zakarialoulida92@gmail.com>
+Date:   Fri Oct 25 07:53:13 2024 +0100
+
+    conifg with h2
+
+[33mcommit 51096ac88a5b4340cd8f3f7175a8355362d08e4b[m
+Author: zakaria loulida <zakarialoulida92@gmail.com>
+Date:   Fri Oct 25 07:52:23 2024 +0100
+
+    presentation  created
+
+[33mcommit d051ff3091d235295a339cb84e0f7ef3471f19b5[m
+Author: zakaria loulida <zakarialoulida92@gmail.com>
+Date:   Fri Oct 25 07:51:51 2024 +0100
+
+    services  created
+
+[33mcommit 21f653de8bcecc5e090379c894c93d3e13e3215b[m
+Author: zakaria loulida <zakarialoulida92@gmail.com>
+Date:   Fri Oct 25 07:51:25 2024 +0100
+
+    daos created
+
+[33mcommit a1c9c8b5e0451c4cca5600753ad9737df6584d93[m
+Author: zakaria loulida <zakarialoulida92@gmail.com>
+Date:   Fri Oct 25 07:50:49 2024 +0100
+
+    models created
+
+[33mcommit 2b653479953b7febfb83d051c93309533e0e83ab[m
+Author: zakaria loulida <zakarialoulida92@gmail.com>
+Date:   Fri Oct 25 07:50:02 2024 +0100
+
+    controllers created
+
+
+
+
+
+    Initial commit
