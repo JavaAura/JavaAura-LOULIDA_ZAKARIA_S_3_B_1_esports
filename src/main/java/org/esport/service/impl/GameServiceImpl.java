@@ -21,6 +21,7 @@ public class GameServiceImpl implements GameService {
         this.gameDao = gameDao;
     }
 
+
     @Override
     public Game createGame(Game game) {
         LOGGER.info("Creating a new game");
