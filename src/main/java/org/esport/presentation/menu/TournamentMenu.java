@@ -272,7 +272,8 @@ public class TournamentMenu {
 
 
         try {
-            long estimatedDuration = tournamentController.calculateEstimatedDuration(tournament);
+            long estimatedDuration =
+                    tournamentController.calculateEstimatedDuration(tournament);
             consoleLogger.displayMessage("Estimated duration of the tournament: " + estimatedDuration + " minutes");
         } catch (Exception e) {
             consoleLogger.displayError("Error calculating the tournament duration: " + e.getMessage());
